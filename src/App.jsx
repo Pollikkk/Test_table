@@ -25,7 +25,9 @@ const App = () => {
 
   return (
     <>
-      <Table users={users}/>
+      <div class = 'content'>
+        <Table users={users}/>
+      </div>
     </>
   )
   

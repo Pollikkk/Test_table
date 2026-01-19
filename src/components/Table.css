@@ -1,0 +1,31 @@
+table {
+  border-radius: 1.5rem;
+  border: 1rem hidden #1e8f8f;
+  border-collapse: collapse;
+  box-shadow: 0 0 0 1px #1e8f8f;
+  overflow: hidden;
+  width: 100%;
+}
+
+li, p, a, td{
+  font-size: 1rem;
+  line-height: 1;
+}
+
+thead {
+  font-size: 1.5rem;
+  background-color: #1e8f8f;
+  color: #fff;
+}
+
+th,
+td {
+  border: 1px solid #1e8f8f;
+  /*min-width:;
+  padding:;*/
+  line-height: 1.5;
+}
+
+td {
+  font-size: 1.3rem;
+}

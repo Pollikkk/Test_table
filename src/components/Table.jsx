@@ -1,4 +1,5 @@
 import UserData from './UserData'
+import './Table.css'
 
 const Table = ({users}) => {
     return (
@@ -7,13 +8,13 @@ const Table = ({users}) => {
               <thead>
                 <tr>
                   <th>ФИО</th>
-                  <th>возраст</th>
-                  <th>поля адреса</th>
-                  <th>рост</th>
-                  <th>вес</th>
-                  <th>номер телефона</th>
-                  <th>email</th>
-                  <th>аватар</th>
+                  <th>Возраст</th>
+                  <th>Адрес</th>
+                  <th>Рост</th>
+                  <th>Вес</th>
+                  <th>Номер телефона</th>
+                  <th>Email</th>
+                  <th>Аватар</th>
                 </tr>
               </thead>
               <tbody>
