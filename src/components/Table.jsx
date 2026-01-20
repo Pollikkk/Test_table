@@ -1,20 +1,30 @@
 import UserData from './UserData'
+import { sortIcons } from '../assets/icons'
 import './Table.css'
 
-const Table = ({users}) => {
+const Table = ({users, onSort, direction}) => {
+
+    const getSortIcon = (dir) => {
+      const src = sortIcons[dir]
+      return src ? <img src={src} alt={`${dir} sort`} width={1} height={1} /> : null
+    }
+
     return (
         <>
             <table>
               <thead>
                 <tr>
-                  <th>ФИО</th>
-                  <th>Возраст</th>
-                  <th>Адрес</th>
-                  <th>Рост</th>
-                  <th>Вес</th>
-                  <th>Номер телефона</th>
+                  <th onClick={() => {onSort('firstName')}}>
+                    Фамилия
+                    {getSortIcon(direction)}
+                  </th>
+                  <th onClick={() => onSort('lastName')}>Имя</th>
+                  <th onClick={() => onSort('maidenName')}>Отчество</th>
+                  <th onClick={() => onSort('age')}>Возраст</th>
+                  <th onClick={() => onSort('gender')}>Гендер</th>
+                  <th onClick={() => onSort('phone')}>Номер телефона</th>
                   <th>Email</th>
-                  <th>Аватар</th>
+                  <th>Адрес</th>
                 </tr>
               </thead>
               <tbody>

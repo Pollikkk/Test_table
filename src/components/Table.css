@@ -5,10 +5,12 @@ table {
   box-shadow: 0 0 0 1px #1e8f8f;
   overflow: hidden;
   width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 li, p, a, td{
-  font-size: 1rem;
+  font-size: 1vw;
   line-height: 1;
 }
 
@@ -21,11 +23,15 @@ thead {
 th,
 td {
   border: 1px solid #1e8f8f;
-  /*min-width:;
-  padding:;*/
+  padding: 1.5rem;
   line-height: 1.5;
 }
 
 td {
-  font-size: 1.3rem;
+  font-size: 1.3vw;
+}
+
+img{
+  height: 5vw;
+  width: 5vw;
 }
