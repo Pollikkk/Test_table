@@ -9,13 +9,8 @@ table {
   margin: 0 auto;
 }
 
-li, p, a, td{
-  font-size: 1vw;
-  line-height: 1;
-}
-
 thead {
-  font-size: 1.5rem;
+  font-size: 1.2vw;
   background-color: #1e8f8f;
   color: #fff;
 }
@@ -23,10 +18,10 @@ thead {
 th,
 td {
   border: 1px solid #1e8f8f;
-  padding: 1.5rem;
-  line-height: 1.5;
+  padding: 1.5vw;
+  line-height: 1.5vw;
 }
 
 td {
-  font-size: 1.3vw;
+  font-size: 1.2vw;
 }
