@@ -74,6 +74,7 @@ const App = () => {
         users={users}
         onSort={onSort}
         direction={sortDirection}
+        field={sortField}
         />
       </div>
     </>

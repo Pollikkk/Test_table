@@ -31,7 +31,12 @@ td {
   font-size: 1.3vw;
 }
 
-img{
-  height: 5vw;
-  width: 5vw;
+.cellContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.arrow{
+  height: 20px;
+  width: 20px;
 }
