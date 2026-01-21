@@ -1,0 +1,9 @@
+.cellContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.arrow{
+  height: 20px;
+  width: 20px;
+}

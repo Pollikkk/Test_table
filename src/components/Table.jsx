@@ -1,57 +1,35 @@
 import UserData from './UserData'
-import { sortIcons } from '../assets/icons'
+import TableHeaderCell from './TableHeaderCell'
 import './Table.css'
 
-const Table = ({users, onSort, direction, field}) => {
+const Table = ({ users, onSort, direction, sortField }) => {
 
-    const getSortIcon = (dir, f) => {
-      const src = sortIcons[dir]
-      return f == field ? (src ? <img className="arrow" src={src} alt={`${dir} sort`} width={1} height={1} /> : <div className="arrow"></div>) : <div className="arrow"></div>
-    }
+    const columnConfig = [
+      { field: 'firstName', label: 'Фамилия' },
+      { field: 'lastName', label: 'Имя' },
+      { field: 'maidenName', label: 'Отчество' },
+      { field: 'age', label: 'Возраст' },
+      { field: 'gender', label: 'Гендер' },
+      { field: 'phone', label: 'Номер телефона' },
+      { field: null, label: 'Email' },
+      { field: null, label: 'Адрес' },
+    ]
 
     return (
         <>
             <table>
               <thead>
                 <tr>
-                  <th onClick={() => {onSort('firstName')}}>
-                    <div className="cellContent">
-                      <div>Фамилия</div>
-                      {getSortIcon(direction, 'firstName')}
-                    </div>
-                  </th>
-                  <th onClick={() => onSort('lastName')}>
-                    <div className="cellContent">
-                      <div>Имя</div>
-                      {getSortIcon(direction, 'lastName')}
-                    </div>
-                  </th>
-                  <th onClick={() => onSort('maidenName')}>
-                    <div className="cellContent">
-                      <div>Отчество</div>
-                      {getSortIcon(direction, 'maidenName')}
-                    </div>
-                  </th>
-                  <th onClick={() => onSort('age')}>
-                    <div className="cellContent">
-                      <div>Возраст</div>
-                      {getSortIcon(direction, 'age')}
-                    </div>
-                  </th>
-                  <th onClick={() => onSort('gender')}>
-                    <div className="cellContent">
-                      <div>Гендер</div>
-                      {getSortIcon(direction, 'gender')}
-                    </div>
-                  </th>
-                  <th onClick={() => onSort('phone')}>
-                    <div className="cellContent">
-                      <div>Номер телефона</div>
-                      {getSortIcon(direction, 'phone')}
-                    </div>
-                  </th>
-                  <th>Email</th>
-                  <th>Адрес</th>
+                  {columnConfig.map(({ field, label }) => (
+                    <TableHeaderCell 
+                      key={label}
+                      field={field} 
+                      label={label}
+                      onSort={onSort}
+                      sortField={sortField}
+                      sortDirection={direction}
+                    />
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -62,4 +40,4 @@ const Table = ({users, onSort, direction, field}) => {
     )
 }
 
-export default Table;
+export default Table

@@ -24,6 +24,7 @@ const App = () => {
   const onSort = async (field) => {
     console.log(field)
     console.log(sortField)
+    if (field == null) return
     let newSortField = sortField
     let newSortDirection = sortDirection
     
@@ -74,7 +75,7 @@ const App = () => {
         users={users}
         onSort={onSort}
         direction={sortDirection}
-        field={sortField}
+        sortField={sortField}
         />
       </div>
     </>
