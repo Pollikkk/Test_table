@@ -28,6 +28,7 @@ const Table = ({ users, onSort, direction, sortField }) => {
                       onSort={onSort}
                       sortField={sortField}
                       sortDirection={direction}
+                      users={users}
                     />
                   ))}
                 </tr>
