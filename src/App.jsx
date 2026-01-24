@@ -2,35 +2,31 @@ import { useEffect, useMemo,useState } from 'react'
 import { TableContext } from './contexts/TableContext'
 import Table from './components/Table'
 import './App.css'
+import Pagination from './components/Pagination'
 
 const API = "https://dummyjson.com/users"
 
 const App = () => {
-  const [rawUsers, setRawUsers] = useState([])
-  const [users, setUsers] = useState([])
+  const [rawUsers, setRawUsers] = useState([])//обычный список пользователей
+  const [users, setUsers] = useState([])//текущий список пользователей
 
-  const [sortField, setSortField] = useState(null)
+  const [sortField, setSortField] = useState(null)//сортировка
   const [sortDirection, setSortDirection] = useState('none')
 
-  const [activeFilterField, setActiveFilterField] = useState(null)
-
+  const [activeFilterField, setActiveFilterField] = useState(null)//фильтр
   const [filter, setFilter] = useState({ key: null, value: null })
 
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null)//открытый пользователь
   const [isOpen, setIsOpen] = useState(false)
 
-  const fetchUsers = async (url) => {
-    try{
-      const res = await fetch(url)
-      const data = await res.json()
-      if(data.users.length > 0){
-        setUsers(data.users)
-      }
-      console.log(users)
-    } catch (e) {
-      console.error(e)
-    }
-  }
+  const pageSize = 5  //постраничный вывод пользоватлей
+  const [page, setPage] = useState(1)
+  const totalPages = Math.ceil(users.length / pageSize)
+  const currentPageUsers = useMemo(() => {
+    const start = (page - 1) * pageSize
+    const end = start + pageSize
+    return users.slice(start, end)
+  }, [users, page])
 
   useEffect(() => {
     const load = async () => {
@@ -60,7 +56,6 @@ const App = () => {
   useEffect(() => {
     const loadFiltered = async () => {
       if (!filter.key || filter.value == null || filter.value === '') {
-        //setUsers(rawUsers); 
         return
       }
 
@@ -92,15 +87,9 @@ const App = () => {
     if (nextIndex === 'none') setSortField(null)
   }
 
-  const getSortedUsers = async () => {
-    const res = await fetch(`https://dummyjson.com/users?sortBy=${sortField}&order=${sortDirection}`)
-    const data = await res.json()
-    setUsers(data.users)
-  }
-
   const contextValue = useMemo(() => ({
-    users,         // то, что выводим
-    rawUsers,             // если нужны "сырые" данные
+    users,         
+    rawUsers,        
     sortField,
     sortDirection,
     onSort,
@@ -112,12 +101,16 @@ const App = () => {
     setCurrentUser,
     isOpen,
     setIsOpen,
-  }), [users, rawUsers, sortField, sortDirection, activeFilterField, filter, currentUser, isOpen])
+    currentPageUsers,
+    page,
+    setPage
+  }), [users, rawUsers, sortField, sortDirection, activeFilterField, filter, currentUser, isOpen, currentPageUsers, page])
 
   return (
     <>
       <TableContext.Provider value={contextValue}>
         <Table />
+        <Pagination totalPages={totalPages}/>
       </TableContext.Provider>
     </>
   )

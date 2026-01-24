@@ -1,12 +1,12 @@
 table {
-  border-radius: 1.5rem;
+  padding-top: 10vh;
   border: 1rem hidden #1e8f8f;
   border-collapse: collapse;
   box-shadow: 0 0 0 1px #1e8f8f;
-  overflow: hidden;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  z-index: 1;
 }
 
 thead {
