@@ -47,12 +47,14 @@ const TableHeaderCell = ({ field, label}) => {
                 </div>
                 
                 <div className="filter">
-                    <img 
-                        className="filterImg" 
-                        src={filterIcon} 
-                        alt="filter"
-                        onClick={closeOpenFilter}
-                    />
+                    {field && (
+                        <img 
+                            className="filterImg" 
+                            src={filterIcon} 
+                            alt="filter"
+                            onClick={closeOpenFilter}
+                        />)
+                    }
 
                     {activeFilterField === field && (
                         <div class="filterModal">
