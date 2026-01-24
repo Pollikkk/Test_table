@@ -2,8 +2,7 @@ import UserData from './UserData'
 import TableHeaderCell from './TableHeaderCell'
 import './Table.css'
 
-const Table = ({ users, onSort, direction, sortField }) => {
-
+const Table = () => {
     const columnConfig = [
       { field: 'firstName', label: 'Фамилия' },
       { field: 'lastName', label: 'Имя' },
@@ -11,8 +10,8 @@ const Table = ({ users, onSort, direction, sortField }) => {
       { field: 'age', label: 'Возраст' },
       { field: 'gender', label: 'Гендер' },
       { field: 'phone', label: 'Номер телефона' },
-      { field: null, label: 'Email' },
-      { field: null, label: 'Адрес' },
+      { field: '', label: 'Email' },
+      { field: '', label: 'Адрес' },
     ]
 
     return (
@@ -25,16 +24,12 @@ const Table = ({ users, onSort, direction, sortField }) => {
                       key={label}
                       field={field} 
                       label={label}
-                      onSort={onSort}
-                      sortField={sortField}
-                      sortDirection={direction}
-                      users={users}
                     />
                   ))}
                 </tr>
               </thead>
               <tbody>
-                <UserData users={users} />
+                <UserData />
               </tbody>
             </table>
         </>

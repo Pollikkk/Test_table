@@ -1,12 +1,20 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { useEffect, useMemo,useState } from 'react'
+import { TableContext } from './contexts/TableContext'
 import Table from './components/Table'
+import './App.css'
+
 const API = "https://dummyjson.com/users"
 
 const App = () => {
+  const [rawUsers, setRawUsers] = useState([])
   const [users, setUsers] = useState([])
-  const [sortDirection, setSortDirection] = useState('none')
+
   const [sortField, setSortField] = useState(null)
+  const [sortDirection, setSortDirection] = useState('none')
+
+  const [activeFilterField, setActiveFilterField] = useState(null)
+
+  const [filter, setFilter] = useState({ key: null, value: null });
 
   const fetchUsers = async (url) => {
     try{
@@ -21,63 +29,98 @@ const App = () => {
     }
   }
 
-  const onSort = async (field) => {
-    console.log(field)
-    console.log(sortField)
-    if (field == null) return
-    let newSortField = sortField
-    let newSortDirection = sortDirection
-    
-    if (sortField !== field) {
-      newSortField = field
-      newSortDirection = 'asc'
-    } else {
-      const directions = ['none', 'asc', 'desc']
-      const currentIndex = directions.indexOf(sortDirection)
-      const nextIndex = (currentIndex + 1) % 3
-      console.log(currentIndex)
-      newSortDirection = directions[nextIndex]
-      
-      if (newSortDirection === 'none') {
-        newSortField = null
-        await fetchUsers(API) //?????????????
-        setSortField(null)
-        setSortDirection('none')
-        return;
-      }
-    }
-
-    setSortField(newSortField)
-    setSortDirection(newSortDirection)
-    
-    try{
-      const res = await fetch(`https://dummyjson.com/users?sortBy=${newSortField}&order=${newSortDirection}`)
+  useEffect(() => {
+    const load = async () => {
+      const res = await fetch(API)
       const data = await res.json()
-      if(data.users.length > 0){
-        setUsers(data.users)
-      }
-      console.log(users)
-      console.log(sortField)
-      console.log(sortDirection)
-    } catch (e) {
-      console.error(e)
+      setRawUsers(data.users || [])
+      setUsers(data.users || [])
     }
-  }
+    load()
+  }, [])
 
   useEffect(() => {
-    fetchUsers(API);
-  }, [])
+    const loadSorted = async () => {
+      // нет сортировки -> вернуть как было
+      if (!sortField || sortDirection === 'none') {
+        setUsers(rawUsers)
+        return
+      }
+
+      const res = await fetch(`${API}?sortBy=${sortField}&order=${sortDirection}`)
+      const data = await res.json()
+      setUsers(data.users || [])
+    }
+    loadSorted()
+  }, [sortField, sortDirection, rawUsers])
+
+  useEffect(() => {
+    const loadFiltered = async () => {
+      if (!filter.key || filter.value == null || filter.value === '') {
+        //setUsers(rawUsers); 
+        return;
+      }
+
+      const res = await fetch(`${API}/filter?key=${encodeURIComponent(filter.key)}&value=${encodeURIComponent(filter.value)}`);
+      const data = await res.json();
+      setUsers(data.users || []);
+    };
+
+    loadFiltered();
+  }, [filter, rawUsers])
+
+  const onSort = (field) => {
+    if (!field) return
+    console.log(field)
+    console.log(sortField)
+    
+    if (sortField !== field) {
+      setSortField(field)
+      setSortDirection('asc')
+      return
+    } 
+
+    const directions = ['none', 'asc', 'desc']
+    const nextIndex = (directions.indexOf(sortDirection) + 1) % 3
+    console.log('nextIndex '+nextIndex)
+    console.log('directions[nextIndex] '+directions[nextIndex])
+
+    setSortDirection(directions[nextIndex])
+    if (nextIndex === 'none') setSortField(null)
+  }
+
+  const getSortedUsers = async () => {
+    const res = await fetch(`https://dummyjson.com/users?sortBy=${sortField}&order=${sortDirection}`)
+    const data = await res.json()
+    setUsers(data.users)
+  }
+
+  const contextValue = useMemo(() => ({
+    users,         // то, что выводим
+    rawUsers,             // если нужны "сырые" данные
+    sortField,
+    sortDirection,
+    onSort,
+    activeFilterField,
+    setActiveFilterField,
+    filter,
+    setFilter,
+  }), [users, rawUsers, sortField, sortDirection, activeFilterField, filter])
 
   return (
     <>
-      <div className = 'content'>
+      <TableContext.Provider value={contextValue}>
+        <Table />
+      </TableContext.Provider>
+
+      {/*<div className = 'content'>
         <Table 
         users={users}
         onSort={onSort}
         direction={sortDirection}
         sortField={sortField}
         />
-      </div>
+      </div>*/}
     </>
   )
   

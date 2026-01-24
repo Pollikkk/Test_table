@@ -1,16 +1,21 @@
-import { useState } from "react"
+import { useEffect } from "react"
+import { useTable } from "../contexts/TableContext"
 import Filter from './Filter'
 import { sortIcons } from '../assets/icons'
 import filterIcon from '../assets/filter.svg'
 import './TableHeaderCell.css'
 
-const TableHeaderCell = ({ field, label, onSort, sortField, sortDirection, users}) => {
-    const [isFilterOpen, setIsFilterOpen] = useState(false)
-    const openFilter = () => setIsFilterOpen(true)
-    const closeFilter = () => setIsFilterOpen(false)
+const TableHeaderCell = ({ field, label}) => {
+    const {
+        sortField,
+        sortDirection,
+        onSort,
+        activeFilterField,
+        setActiveFilterField,
+    } = useTable()
 
     const getSortIcon = () => {//меняем сортировочную иконку
-        if (sortField !== field){
+        if (!field || sortField !== field){
             console.log('sortField ' + sortField)
             console.log('field ' + field)
             return <div className="arrow"></div>
@@ -22,30 +27,37 @@ const TableHeaderCell = ({ field, label, onSort, sortField, sortDirection, users
 
     const closeOpenFilter = (e) => {
         e.stopPropagation()
-        console.log('isFilterOpen '+isFilterOpen)
-        isFilterOpen ? closeFilter():openFilter()
+        if (!field) return
+        setActiveFilterField(activeFilterField === field ? null : field)
     }
 
-    const applyFilter = () => {//применить фильтр
+    useEffect(() => {
+        const onDocClick = () => setActiveFilterField(null)
+        if (!activeFilterField) return
+        document.addEventListener('click', onDocClick)
+        return () => document.removeEventListener('click', onDocClick)
+    }, [activeFilterField]);
         
-    }
     return (
         <>
-            <th className="cell" onClick={() => {onSort(field)}}>
+            <th className="cell" onClick={() => field && onSort(field)}>
                 <div className="cellContent">
                      <div>{label}</div>
                      {getSortIcon()}
                 </div>
+                
                 <div className="filter">
-                    <img className="filterImg" src={filterIcon} onClick={(e) => closeOpenFilter(e)}></img>
-                    {isFilterOpen && (
-                        <Filter 
-                            onClose={closeFilter}
-                            applyFilter={applyFilter}
-                            sortField={sortField}
-                            field={field}
-                            users={users}
-                        />
+                    <img 
+                        className="filterImg" 
+                        src={filterIcon} 
+                        alt="filter"
+                        onClick={closeOpenFilter}
+                    />
+
+                    {activeFilterField === field && (
+                        <div class="filterModal">
+                            <Filter field={field} />
+                        </div>
                     )}
                 </div>
             </th>
