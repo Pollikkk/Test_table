@@ -16,6 +16,7 @@
     width: 20px;
     display: block;
     cursor: pointer;
+    z-index: 10;
 }
 
 .cellContent {

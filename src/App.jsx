@@ -14,7 +14,10 @@ const App = () => {
 
   const [activeFilterField, setActiveFilterField] = useState(null)
 
-  const [filter, setFilter] = useState({ key: null, value: null });
+  const [filter, setFilter] = useState({ key: null, value: null })
+
+  const [currentUser, setCurrentUser] = useState(null)
+  const [isOpen, setIsOpen] = useState(false)
 
   const fetchUsers = async (url) => {
     try{
@@ -58,12 +61,12 @@ const App = () => {
     const loadFiltered = async () => {
       if (!filter.key || filter.value == null || filter.value === '') {
         //setUsers(rawUsers); 
-        return;
+        return
       }
 
-      const res = await fetch(`${API}/filter?key=${encodeURIComponent(filter.key)}&value=${encodeURIComponent(filter.value)}`);
-      const data = await res.json();
-      setUsers(data.users || []);
+      const res = await fetch(`${API}/filter?key=${encodeURIComponent(filter.key)}&value=${encodeURIComponent(filter.value)}`)
+      const data = await res.json()
+      setUsers(data.users || [])
     };
 
     loadFiltered();
@@ -105,22 +108,17 @@ const App = () => {
     setActiveFilterField,
     filter,
     setFilter,
-  }), [users, rawUsers, sortField, sortDirection, activeFilterField, filter])
+    currentUser,
+    setCurrentUser,
+    isOpen,
+    setIsOpen,
+  }), [users, rawUsers, sortField, sortDirection, activeFilterField, filter, currentUser, isOpen])
 
   return (
     <>
       <TableContext.Provider value={contextValue}>
         <Table />
       </TableContext.Provider>
-
-      {/*<div className = 'content'>
-        <Table 
-        users={users}
-        onSort={onSort}
-        direction={sortDirection}
-        sortField={sortField}
-        />
-      </div>*/}
     </>
   )
   

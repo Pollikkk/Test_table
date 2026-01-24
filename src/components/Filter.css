@@ -1,10 +1,9 @@
 .filterField {
-    padding: 12px;
     width: 100%;
-    background: rgb(103, 130, 130);
-    color: white;
+    background-color: #1e8f8f;
+    color: #fff;
     border-radius: 8px;
-    z-index: 1000;       
+    z-index: 10;       
     box-shadow: 0 10px 25px rgba(0,0,0,.25);
     max-height: 200px;
     overflow-y: auto;
@@ -12,12 +11,13 @@
 
 .chooseFilter{
     border: none;
-    padding: 5px;
+    padding: 10px;
     width: 100%;
-    background: rgb(103, 130, 130);
+    background-color: #1e8f8f;
+    color: #fff;
     cursor: pointer;
 }
 
 .chooseFilter:hover{
-    background: rgb(138, 167, 167);
+    background: #81dcdc;
 }

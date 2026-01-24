@@ -1,11 +1,21 @@
 import { useTable } from "../contexts/TableContext"
+import { useState } from "react"
+import UserModal from './UserModal'
+import './UserData.css'
 
 const UserData = () => {
-    const {users} = useTable()
+    const {users, setIsOpen, setCurrentUser} = useTable()
     return (
         <>
             {users.map((user) => (
-                <tr key={user.id}>
+                <tr 
+                onClick={() => {
+                    setIsOpen(true); 
+                    setCurrentUser(user);
+                    console.log('USER ' + user)
+                }} 
+                key={user.id}
+                >
                     <td>{user.firstName}</td>
                     <td>{user.lastName}</td>
                     <td>{user.maidenName}</td>
@@ -20,4 +30,4 @@ const UserData = () => {
     )
 }
 
-export default UserData;
+export default UserData

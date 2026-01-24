@@ -1,8 +1,12 @@
+import { useTable } from "../contexts/TableContext"
 import UserData from './UserData'
 import TableHeaderCell from './TableHeaderCell'
+import UserModal from './UserModal'
 import './Table.css'
 
 const Table = () => {
+    const {isOpen, setIsOpen} = useTable()
+
     const columnConfig = [
       { field: 'firstName', label: 'Фамилия' },
       { field: 'lastName', label: 'Имя' },
@@ -32,6 +36,8 @@ const Table = () => {
                 <UserData />
               </tbody>
             </table>
+
+            <UserModal isOpen={isOpen} onClose={() => setIsOpen(false)}/>
         </>
     )
 }
