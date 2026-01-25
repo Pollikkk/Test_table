@@ -25,9 +25,6 @@ const Filter = ({ field }) => {
                         {val} 
                     </button>
                 ))}
-                
-                    {console.log('FIELD ' + field)}
-                    {console.log('FILTER ' + filter.key + " " + filter.value)}
             </div>
         </>
     )

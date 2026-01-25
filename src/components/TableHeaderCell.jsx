@@ -16,12 +16,9 @@ const TableHeaderCell = ({ field, label}) => {
 
     const getSortIcon = () => {//меняем сортировочную иконку
         if (!field || sortField !== field){
-            console.log('sortField ' + sortField)
-            console.log('field ' + field)
             return <div className="arrow"></div>
         } 
         const src = sortIcons[sortDirection]
-        console.log('src' + src)
         return src ? <img className="arrow" src={src} alt={`${sortDirection} sort`}/> : <div className="arrow"></div>
     }
 

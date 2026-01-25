@@ -10,7 +10,6 @@ const UserData = () => {
                 onClick={() => {
                     setIsOpen(true); 
                     setCurrentUser(user);
-                    console.log('USER ' + user)
                 }} 
                 key={user.id}
                 >

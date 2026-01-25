@@ -69,8 +69,6 @@ const App = () => {
 
   const onSort = (field) => {
     if (!field) return
-    console.log(field)
-    console.log(sortField)
     
     if (sortField !== field) {
       setSortField(field)
@@ -80,8 +78,6 @@ const App = () => {
 
     const directions = ['none', 'asc', 'desc']
     const nextIndex = (directions.indexOf(sortDirection) + 1) % 3
-    console.log('nextIndex '+nextIndex)
-    console.log('directions[nextIndex] '+directions[nextIndex])
 
     setSortDirection(directions[nextIndex])
     if (nextIndex === 'none') setSortField(null)
