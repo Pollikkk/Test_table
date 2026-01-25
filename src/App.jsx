@@ -40,7 +40,7 @@ const App = () => {
 
   useEffect(() => {
     const loadSorted = async () => {
-      // нет сортировки -> вернуть как было
+      // нет сортировки -> вернуть первоначально загруженных пользователей
       if (!sortField || sortDirection === 'none') {
         setUsers(rawUsers)
         return
